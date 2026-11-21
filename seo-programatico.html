@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="builder" content="Stronglify">
+<link rel="icon" type="image/x-icon" href="https://media.stronglify.com/295/favicon-stronglify-ascii-amarillo-1795213073.svg">
+<title>SEO programático explicado: la diferencia entre generar páginas y generar resultados · Stronglify</title>
+<meta name="description" content="No es un problema de volumen. Es un problema de qué estás generando y para quién. Acá hablaremos un poco de eso.">
+<meta name="robots" content="index">
+<link rel="canonical" href="https://stronglifythemes.github.io/seo-programatico"><style>
+html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}
+fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}img{max-width:100%;height:auto}
+</style><style>
+:root { --negro:#ffffff; --ultra:#ffd400; --ultra-claro:#0a0a0a; --brillo:#0a0a0a; --texto:#0a0a0a; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --display:"Space Grotesk",system-ui,sans-serif; }
+*,*::before,*::after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body.strong-ascii { margin:0; background:var(--negro); color:var(--texto); font-family:var(--display); }
+.strong-ascii a { color:inherit; }
+.strong-ascii pre[data-ascii] { margin:0; font-family:var(--mono); line-height:1; letter-spacing:0; white-space:pre; overflow:hidden; color:var(--ultra-claro); text-shadow:0 0 .3em #ffd400, 0 0 .9em #ffd40099; user-select:none; pointer-events:none; }
+.sa-loader { position:fixed; inset:0; z-index:100; display:grid; place-content:center; justify-items:center; gap:1rem; background:#fff; animation:sa-sale .6s ease 1.6s forwards; }
+.sa-loader pre { width:min(70vw,22rem); }
+.sa-loader span { font-family:var(--mono); letter-spacing:.4em; text-transform:uppercase; color:var(--brillo); }
+@keyframes sa-sale { to { opacity:0; visibility:hidden; } }
+.sa-header { position:sticky; top:0; z-index:20; display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem clamp(1rem,4vw,3rem); background:#fffd; backdrop-filter:blur(8px); border-bottom:2px solid #0a0a0a; font-family:var(--mono); }
+.sa-brand { font-weight:700; letter-spacing:.18em; text-transform:uppercase; text-decoration:none; color:var(--brillo); }
+.sa-header nav { display:flex; gap:clamp(.8rem,3vw,2rem); flex-wrap:wrap; }
+.sa-header nav a { text-decoration:none; font-size:.9rem; opacity:.85; }
+.sa-header nav a:hover { color:var(--brillo); opacity:1; }
+.sa-hero { position:relative; isolation:isolate; overflow:hidden; display:grid; align-items:center; min-height:calc(100svh - 3.6rem); padding:clamp(1.5rem,6vw,6rem); }
+.sa-hero-campo { position:absolute; inset:0; z-index:-1; display:grid; align-content:center; }
+.sa-hero-copy { max-width:44rem; display:grid; gap:1.2rem; }
+.sa-hero h1 { margin:0; font-size:clamp(3.5rem,11vw,10rem); line-height:.86; letter-spacing:-.05em; text-transform:uppercase; }
+.sa-hero p { margin:0; max-width:32ch; font-size:clamp(1.1rem,2vw,1.45rem); line-height:1.45; opacity:.9; }
+.sa-boton { justify-self:start; display:inline-block; padding:.95rem 1.5rem; background:var(--ultra); color:#0a0a0a; text-decoration:none; font-family:var(--mono); font-weight:700; letter-spacing:.06em; border:2px solid #0a0a0a; box-shadow:4px 4px 0 #0a0a0a; }
+.sa-boton:hover { background:#0a0a0a; color:#ffd400; }
+.sa-boton:focus-visible, .sa-header a:focus-visible { outline:2px solid var(--brillo); outline-offset:3px; }
+.sa-cinta { overflow:hidden; background:var(--ultra); color:#000; font-family:var(--mono); font-weight:700; text-transform:uppercase; letter-spacing:.12em; border-block:1px solid var(--ultra-claro); }
+.sa-cinta-track { display:flex; width:max-content; animation:sa-cinta 22s linear infinite; }
+.sa-cinta span { padding:.9rem 2rem; white-space:nowrap; }
+@keyframes sa-cinta { to { transform:translateX(-50%); } }
+.sa-servicios { padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); }
+.sa-servicios h2, .sa-split h2, .sa-cta h2 { margin:0 0 clamp(1.5rem,4vw,3rem); font-size:clamp(2.6rem,7vw,6.5rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase; }
+.sa-servicios-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; }
+.sa-card { padding:clamp(1.2rem,3vw,2rem); border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; display:grid; gap:.8rem; align-content:start; transition:background .3s; }
+.sa-card:hover { background:#0a0a0a1f; }
+.sa-card pre { width:100%; }
+.sa-card h3 { margin:.4rem 0 0; font-size:clamp(1.4rem,2.4vw,2rem); text-transform:uppercase; letter-spacing:-.02em; }
+.sa-card p { margin:0; line-height:1.55; opacity:.85; }
+.sa-split { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:center; gap:clamp(1.5rem,5vw,5rem); padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); background:linear-gradient(90deg,#fff6bf,#fff 70%); border-block:1px solid #0a0a0a66; }
+.sa-split ol { list-style:none; margin:0; padding:0; display:grid; gap:1.4rem; counter-reset:paso; }
+.sa-split li { display:grid; gap:.3rem; padding-left:3.2rem; position:relative; counter-increment:paso; }
+.sa-split li::before { content:counter(paso,decimal-leading-zero); position:absolute; left:0; top:.1rem; font-family:var(--mono); color:var(--ultra-claro); font-weight:700; }
+.sa-split li strong { font-size:1.3rem; text-transform:uppercase; }
+.sa-split li span { opacity:.8; line-height:1.5; }
+.sa-cifras { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); background:var(--ultra); }
+.sa-cifras div { padding:clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2.5rem); display:grid; gap:.4rem; border-right:1px solid #000; }
+.sa-cifras strong { font-family:var(--mono); font-size:clamp(2.6rem,6vw,5rem); line-height:1; color:#0a0a0a; }
+.sa-cifras span { color:#000; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+.sa-cta { position:relative; isolation:isolate; overflow:hidden; display:grid; justify-items:center; align-content:center; gap:1rem; min-height:clamp(26rem,55vw,40rem); padding:clamp(3rem,8vw,7rem) 1.25rem; text-align:center; }
+.sa-cta-campo { position:absolute; inset:0; z-index:-1; display:grid; align-content:center; opacity:.55; }
+.sa-cta::before { content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse at center,#fff 0%,#fffc 30%,#fff0 70%); }
+.sa-cta h2 { margin-bottom:0; }
+.sa-cta p { margin:0 0 .6rem; max-width:40ch; font-size:clamp(1.05rem,1.8vw,1.3rem); opacity:.9; }
+.sa-cta .sa-boton { justify-self:center; }
+.sa-footer { border-top:1px solid #0a0a0a; }
+.sa-footer pre { opacity:.6; }
+.sa-footer div { display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1.5rem clamp(1rem,4vw,3rem); font-family:var(--mono); font-size:.9rem; }
+.sa-footer nav { display:flex; gap:1.2rem; flex-wrap:wrap; }
+.sa-footer nav a { text-decoration:none; opacity:.8; }
+.sa-page-hero { position:relative; isolation:isolate; overflow:hidden; display:grid; align-content:end; gap:.9rem; min-height:clamp(20rem,45vw,32rem); padding:clamp(2rem,6vw,5rem) clamp(1rem,4vw,3rem); border-bottom:1px solid #0a0a0a; }
+.sa-page-hero pre { position:absolute; inset:0; z-index:-1; display:grid; align-content:center; opacity:.6; }
+.sa-page-hero h1 { margin:0; font-size:clamp(3rem,9vw,8rem); line-height:.88; letter-spacing:-.05em; text-transform:uppercase; }
+.sa-page-hero p { margin:0; max-width:40ch; font-size:clamp(1.05rem,1.8vw,1.3rem); opacity:.9; }
+.sa-blog-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr)); border-left:1px solid #0a0a0a; }
+.sa-post { display:grid; gap:.7rem; align-content:start; padding:clamp(1.2rem,3vw,2rem); border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; text-decoration:none; transition:background .3s; }
+.sa-post:hover, .sa-post:focus-visible { background:#0a0a0a1f; outline:none; }
+.sa-post h2 { margin:.3rem 0 0; font-size:clamp(1.4rem,2.4vw,2rem); line-height:1.05; text-transform:uppercase; }
+.sa-post p { margin:0; opacity:.85; line-height:1.55; }
+.sa-post-fecha { font-family:var(--mono); font-size:.85rem; color:var(--brillo); letter-spacing:.08em; }
+.sa-article-hero { min-height:clamp(24rem,55vw,38rem); }
+.sa-prose { width:min(calc(100% - 2rem),46rem); margin:clamp(2.5rem,6vw,5rem) auto; font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:1.75; }
+.sa-prose h2 { margin:2.2rem 0 .6rem; font-size:clamp(1.6rem,3vw,2.4rem); text-transform:uppercase; letter-spacing:-.02em; color:var(--brillo); }
+.sa-prose a { color:var(--brillo); }
+.sa-prose blockquote { margin:2rem 0; padding:1rem 1.4rem; border-left:3px solid var(--ultra); background:#0a0a0a1a; font-family:var(--mono); }
+.sa-prose pre { padding:1rem; border:1px solid #0a0a0a; overflow:auto; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-blank { min-height:40vh; }
+.sa-botones { display:flex; flex-wrap:wrap; gap:.8rem; }
+.sa-boton-linea { background:transparent; box-shadow:none; }
+.sa-testimonios, .sa-faq { padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); }
+.sa-testimonios h2, .sa-faq h2 { margin:0 0 clamp(1.5rem,4vw,3rem); font-size:clamp(2.6rem,7vw,6.5rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase; }
+.sa-testimonios-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; }
+.sa-testimonios figure { margin:0; padding:clamp(1.4rem,3vw,2.2rem); display:grid; gap:1.2rem; align-content:space-between; border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; }
+.sa-testimonios blockquote { margin:0; font-size:clamp(1.1rem,1.8vw,1.35rem); line-height:1.5; }
+.sa-testimonios blockquote::before { content:"> "; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-testimonios figcaption { font-family:var(--mono); font-size:.9rem; color:var(--brillo); }
+.sa-faq details { border-top:1px solid #0a0a0a; padding:1.2rem 0; }
+.sa-faq details:last-of-type { border-bottom:1px solid #0a0a0a; }
+.sa-faq summary { cursor:pointer; font-size:clamp(1.2rem,2.2vw,1.7rem); font-weight:700; list-style:none; }
+.sa-faq summary::before { content:"+ "; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-faq details[open] summary::before { content:"- "; }
+.sa-faq p { margin:.8rem 0 0; max-width:60ch; line-height:1.6; opacity:.88; }
+.sa-prose ul ul { margin-top:.4rem; }
+.sa-prose code { font-family:var(--mono); color:var(--brillo); }
+.sa-planes { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); gap:0; border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; margin:2rem 0; }
+.sa-planes div { padding:1.5rem; border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; }
+.sa-planes strong { display:block; font-family:var(--mono); font-size:2.6rem; color:#fff; }
+.sa-hero-centro { justify-items:center; text-align:center; align-content:start; gap:1.3rem; padding-top:clamp(4rem,9vw,8rem); min-height:auto; }
+.sa-hero-centro h1 { max-width:14ch; }
+.sa-hero-centro p { max-width:46ch; margin:0 auto; }
+.sa-hero-centro .sa-botones { justify-content:center; }
+.sa-demo { width:min(100%,76rem); margin-top:clamp(1.5rem,4vw,3rem); border:2px solid #0a0a0a; background:#0a0a0a; color:#fff; box-shadow:8px 8px 0 #ffd400; text-align:left; }
+.sa-demo-barra { display:flex; align-items:center; gap:.4rem; padding:.6rem .9rem; border-bottom:1px solid #0a0a0a; font-family:var(--mono); font-size:.8rem; }
+.sa-demo-barra span { width:.6rem; height:.6rem; border:1px solid var(--ultra-claro); }
+.sa-demo-barra em { margin-left:.8rem; font-style:normal; opacity:.7; }
+.sa-demo pre { padding:1rem; }
+.sa-about { padding:clamp(3.5rem,9vw,8rem) clamp(1rem,4vw,3rem); border-top:1px solid #0a0a0a; }
+.sa-about h2 { margin:0; max-width:24ch; font-size:clamp(2rem,5vw,4.6rem); line-height:1.02; letter-spacing:-.035em; font-weight:500; }
+.sa-features { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; }
+.sa-feature { padding:clamp(1.2rem,3vw,2rem); border-right:1px solid #0a0a0a; display:grid; gap:1rem; align-content:start; min-width:0; }
+.sa-feature:last-child { border-right:0; }
+.sa-feature h3 { margin:0; font-family:var(--mono); font-size:.9rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brillo); }
+.sa-agentic-input { border:1px solid var(--ultra-claro); padding:.9rem 1rem; }
+.sa-agentic-input p { margin:0 0 .5rem; line-height:1.45; }
+.sa-agentic-input span { font-family:var(--mono); font-size:.8rem; color:var(--brillo); }
+.sa-agentic-pasos { list-style:none; margin:0; padding:0; display:grid; gap:.45rem; font-size:.95rem; }
+.sa-agentic-pasos li { opacity:.25; animation:sa-paso 10s steps(1) infinite; }
+.sa-agentic-pasos li::before { content:"[ ] "; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-agentic-pasos li:nth-child(1) { animation-delay:0s; } .sa-agentic-pasos li:nth-child(2) { animation-delay:.9s; } .sa-agentic-pasos li:nth-child(3) { animation-delay:1.8s; }
+.sa-agentic-pasos li:nth-child(4) { animation-delay:2.7s; } .sa-agentic-pasos li:nth-child(5) { animation-delay:3.6s; } .sa-agentic-pasos li:nth-child(6) { animation-delay:4.5s; }
+.sa-agentic-pasos li:nth-child(7) { animation-delay:5.4s; } .sa-agentic-pasos li:nth-child(8) { animation-delay:6.3s; } .sa-agentic-pasos li:nth-child(9) { animation-delay:7.2s; }
+@keyframes sa-paso { 0% { opacity:.25; } 1% { opacity:1; } 90% { opacity:1; } 100% { opacity:.25; } }
+.sa-agentic-track { height:.45rem; background:#0a0a0a1a; overflow:hidden; }
+.sa-agentic-track div { height:100%; background:#ffd400; box-shadow:none; animation:sa-progreso 10s linear infinite; }
+@keyframes sa-progreso { from { width:0; } 82% { width:100%; } to { width:100%; } }
+.sa-trafico p { margin:-.6rem 0 0; font-size:.85rem; opacity:.7; }
+.sa-leyenda { display:flex; flex-wrap:wrap; gap:1rem; font-family:var(--mono); font-size:.8rem; }
+.sa-leyenda span::before { font-family:var(--mono); margin-right:.35rem; color:var(--ultra-claro); }
+.sa-leyenda .l1::before { content:"#"; } .sa-leyenda .l2::before { content:"+"; } .sa-leyenda .l3::before { content:":"; }
+.sa-sub { margin:-1.5rem 0 2rem; max-width:52ch; font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:1.55; opacity:.85; }
+.sa-split .sa-sub { margin:-1rem 0 1.5rem; }
+.sa-planes-sec { padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); border-top:1px solid #0a0a0a; }
+.sa-planes-sec h2 { margin:0 0 clamp(1.5rem,4vw,3rem); font-size:clamp(2.6rem,7vw,6.5rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase; }
+.sa-planes-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; }
+.sa-plan { padding:clamp(1.4rem,3vw,2.2rem); border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; display:grid; gap:.9rem; align-content:start; }
+.sa-plan:last-child { background:var(--ultra); }
+.sa-plan h3 { margin:0; font-size:1.4rem; text-transform:uppercase; }
+.sa-precio { margin:0; display:flex; align-items:baseline; gap:.4rem; }
+.sa-precio strong { font-family:var(--mono); font-size:clamp(2.8rem,6vw,4.4rem); line-height:1; color:#0a0a0a; }
+.sa-precio span { opacity:.7; }
+.sa-plan p { margin:0; line-height:1.5; }
+.sa-plan .sa-boton { margin-top:.4rem; }
+.sa-plan:last-child .sa-boton { background:#0a0a0a; color:#ffd400; }
+@media (max-width:60rem) { .sa-features { grid-template-columns:minmax(0,1fr); } .sa-feature { border-right:0; border-bottom:1px solid #0a0a0a; } }
+@media (max-width:48rem) {
+  .sa-split { grid-template-columns:minmax(0,1fr); }
+  .sa-hero-campo { opacity:.55; }
+}
+ 
+.sa-demo pre[data-ascii], .sa-demo-barra { color:#ffd400; }
+.sa-demo pre[data-ascii] { text-shadow:0 0 .35em #ffd40099; }
+.sa-demo-barra span { border-color:#ffd400; }
+.sa-cinta { color:#0a0a0a; border-block:2px solid #0a0a0a; }
+.sa-header nav a:hover, .sa-footer nav a:hover { background:#ffd400; color:#0a0a0a; opacity:1; }
+.sa-post-fecha, .sa-agentic-input span, .sa-testimonios figcaption, .sa-leyenda { color:#0a0a0a; }
+.sa-agentic-input { background:#fff6bf; border-color:#0a0a0a; }
+.sa-prose blockquote { background:#fff6bf; border-left-color:#ffd400; }
+.sa-prose h2, .sa-prose a, .sa-prose code { color:#0a0a0a; }
+.sa-prose h2 { box-shadow:inset 0 -.35em 0 #ffd400; display:inline; }
+.sa-prose pre { color:#0a0a0a; background:#fff6bf; }
+.sa-card:hover, .sa-post:hover, .sa-post:focus-visible { background:#ffd40026; }
+.sa-plan:last-child { background:#ffd400; }
+.sa-faq summary::before, .sa-testimonios blockquote::before, .sa-split li::before { color:#0a0a0a; background:#ffd400; padding:0 .2em; }
+</style><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></head>
+<body class="strong-ascii">
+  <div class="sa-loader" aria-hidden="true"><pre data-ascii="carga" data-cols="34" data-rows="9"></pre><span>Stronglify</span></div>
+<header class="sa-header">
+  <a class="sa-brand" href="./">Stronglify</a>
+  <nav aria-label="Navegación principal">
+    
+    <a href="./">Inicio</a>
+    
+    <a href="./blog">Blog</a>
+    
+    <a href="./planes">Planes</a>
+    
+    <a href="./acerca-de">Nosotros</a>
+    
+    <a href="./contacto">Demo</a>
+    
+  </nav>
+</header>
+
+<main class="sa-main sa-page">
+  <section class="sa-page-hero sa-article-hero">
+    <pre data-ascii="dona" data-cols="140" data-rows="30" aria-hidden="true"></pre>
+    <span class="sa-post-fecha">Blog de SEO</span>
+    <h1>SEO programático explicado: la diferencia entre generar páginas y generar resultados</h1>
+  </section>
+  <article class="sa-prose"><p>En el SEO tradicional te adaptas al proyecto. Tienes un sitio, unas landings, ciertas zonas, y sobre eso defines la estrategia. En SEO programático el orden se invierte: primero identificas un patrón de búsqueda real y, sobre ese patrón, diseñas.</p>
+<h2>Escala con un patrón, no con mil páginas iguales</h2>
+<p>Esa inversión cambia la herramienta, el ritmo de publicación y el criterio de calidad. Un sitio normal puede vivir con 20 o 50 landings. Un sitio que trabaja este modelo maneja cientos, miles o incluso millones. La escala no es un adorno.<br></p>
+<h2>La diferencia con el SEO tradicional</h2>
+<p>Hacerlo bien pide una herramienta que permita editar y publicar a escala. En un sitio pequeño eso casi no se nota. Aquí sí: si cada cambio implica tocar landings una por una, el modelo se rompe antes de indexar.<br><br></p>
+<p>El volumen, por sí solo, no gana. Gana el patrón que responde a búsquedas concretas y se ejecuta con control.</p>
+<h2>El objetivo: resultados que crecen y presencia real</h2>
+<p>Uno de los objetivos fuertes del SEO programático es acercarte al "<strong>universo de búsquedas"</strong> de un mercado, un nicho o un target.  Partes de unos números actuales, sin hacer trucos o cosas raras, y, con trabajo constante, los empujas hacia un crecimiento que se siente exponencial.</p>
+<p>Lo vimos en un e-commerce que tomó nuestro servicio. Los resultados empezaron pequeños. Con el patrón bien armado y publicación sostenida, la curva dejó de parecer lineal.<br><br>Debemos cubrir las consultas que tu usuario ya hace, con una página que responde exactamente eso.</p>
+<h2>Cinco skills para ejecutarlo sin inflar basura</h2>
+<h2>Experiencia de usuario</h2>
+<p>No necesitas un diseño distinto para cada búsqueda. Necesitas un diseño base que cumpla el objetivo y se replique con variables.</p>
+<p>Kayak lo deja claro.  Una plantilla del tipo “vuelos baratos desde Manizales a Santiago de Cali desde $303.000” sirve también para Nueva York–Medellín o Madrid–Nueva York. Cuantas más variables tenga esa plantilla, más individualizas cada landing sin romper la estructura.    <br><br></p>
+<h2>Identificar patrones</h2>
+<p>Este es el skill que más pesa. Si no hay patrón, no hay SEO programático: hay una lista de URLs.</p>
+<p>Flaticon es un caso limpio. Dentro de una carpeta como iconos-gratis aparecen subcarpetas (mundo, por ejemplo) que agrupan miles de landings con la misma lógica: iconos gratis + variable. Una búsqueda site:dominio.com/carpeta te muestra cuántas páginas viven bajo ese patrón y cómo otros sitios lo están ejecutando.</p>
+<h2>Indexación</h2>
+<p>Puedes crear 100.000 o 200.000 landings. <strong>Si el sitio no indexa, ese volumen no existe para Google. Y esto pasa muchísimo. </strong><br><br></p>
+<p><strong>TripAdvisor</strong> no arma cientos de miles de páginas a mano. Identifica un patrón (“las 15 mejores cosas para hacer en Ámsterdam / Berlín / Lisboa”) y lo masifica con tecnología. Tú tienes que saber cómo entra cada URL al índice: a mano, con sitemap o por API. Crear sin indexar es trabajo perdido.</p>
+<h2>Distinguir spam de contenido válido</h2>
+<p>Cuando se habla de SEO programático, mucha gente piensa en miles de textos publicados sin control. John Mueller ha dicho que, en algunos casos, Google lo trata como spam.<br></p>
+<p>Airbnb y MercadoLibre usan el mismo enfoque y no caen en esa bolsa, porque cada "landing" responde a lo que el usuario busca. <br><br>Si alguien escribe “vuelos Cartagena Miami”, la respuesta no puede ser un botón genérico al home. Tiene que ser cotizar o comprar ese vuelo.</p>
+<p>El spam no es la escala. El spam es repetir una página vacía con la URL cambiada.</p>
+<h2>Evitar contenido duplicado</h2>
+<p>El error clásico es mil URLs distintas con el mismo fondo. La lógica correcta es un diseño maestro con elementos convertidos en variables, de modo que cada landing cambie de verdad, no solo de slug.</p>
+<p>Cuanto más distintas sean entre sí, mejor. El peor escenario es un volumen enorme de páginas casi idénticas: pueden estar indexadas un tiempo, y después el sitio se lee como contenido de baja calidad y deja de mostrarse.</p>
+<p>Tiempos: no lances el "universo" completo el día uno. <strong>Hold your horses</strong>.</p>
+<p>Empieza con lotes chicos: 10, 20, 100, 200. Mira indexación, utilidad real de cada plantilla y si Google trata ese conjunto como páginas distintas. Escala cuando el patrón aguanta, no cuando el cliente pide “ya”. Ése afán nos puede costar.</p>
+<h2>Cuántas páginas hacen falta para que funcione</h2>
+<p>Dos sitios con el mismo número de páginas pueden tener resultados opuestos. El número importa menos que haber entendido el problema antes de escalarlo.</p>
+<p>Si el patrón cubre búsquedas reales y cada landing aporta una respuesta distinta, 200 páginas bien hechas superan a 20.000 clones.</p>
+<h2>Herramientas y contenido</h2>
+<p>No hay una sola plataforma obligatoria. Hay campañas sólidas en WordPress, en Drupal y en Stronglify.</p>
+<p>Lo que sí necesitas es edición masiva: cambiar un elemento presente en 100.000 landings sin abrir cada una, y generar a escala sin que la administración se vuelva un infierno. WordPress se sostiene bien en 1.000 o 2.000 landings. Cuando el volumen sube a 20.000 o 150.000, como se ve en proyectos sobre Stronglify, el proceso de publicación y de mantenimiento ya no es el mismo.</p>
+<p>Da igual cómo se produzca el texto. Lo que cuenta es que cada landing cubra la necesidad detrás de esa búsqueda, con datos, oferta y contexto propios. Calidad primero. Después, escala.</p></article>
+</main>
+<footer class="sa-footer">
+  <pre data-ascii="lluvia" data-cols="140" data-rows="8" aria-hidden="true"></pre>
+  <div>
+    <a class="sa-brand" href="./">Stronglify</a>
+    <nav aria-label="Navegación del pie">
+      
+      <a href="./">Inicio</a>
+      
+      <a href="./blog">Blog</a>
+      
+      <a href="./planes">Planes</a>
+      
+      <a href="./acerca-de">Nosotros</a>
+      
+      <a href="./contacto">Demo</a>
+      
+    </nav>
+    <span>CMS agéntico enfocado en SEO</span>
+  </div>
+</footer>
+<script>
+(() => {
+  const RAMP = ' .,:;-=+*#%@';
+  const L = RAMP.length - 1;
+  const C = v => RAMP[Math.max(0, Math.min(L, Math.round(v * L)))];
+  const S = {
+    ventana(t, W, H) { const g = Array.from({ length: H }, () => Array(W).fill(' '));
+      const put = (x, y, str) => { for (let i = 0; i < str.length; i++) if (y >= 0 && y < H && x + i >= 0 && x + i < W) g[y][x + i] = str[i]; };
+      const side = 18; for (let y = 0; y < H; y++) g[y][side] = '|';
+      ['STRONGLIFY', '', '> Sitios', '  Diseños', '  Medios', '  Agentes', '  Publicar'].forEach((s, i) => put(2, 1 + i * 2, s));
+      put(side + 3, 1, 'Proyecto: landings por ciudad'); put(side + 3, 2, '-'.repeat(W - side - 6));
+      const n = Math.floor(t * 4) % 40, rows = H - 8;
+      for (let r = 0; r < rows; r++) { const k = n - rows + r + 1; if (k < 0) continue; const ok = r < rows - 1;
+        put(side + 3, 4 + r, (ok ? '[x] ' : '[' + '|/-\\'[Math.floor(t * 10) % 4] + '] ') + '/mantenimiento-piscinas-' + ['bogota','medellin','cali','barranquilla','cartagena','pereira','manizales','bucaramanga','santa-marta','cucuta','ibague','villavicencio'][k % 12] + '-' + (k + 1)); }
+      const pct = Math.min(100, Math.round(n / 39 * 100)), bw = W - side - 16, fill = Math.round(bw * pct / 100);
+      put(side + 3, H - 2, '[' + '#'.repeat(fill) + '.'.repeat(bw - fill) + '] ' + pct + '%');
+      return g.map(r => r.join('')).join('\n'); },
+    barras(t, W, H) { const g = Array.from({ length: H }, () => Array(W).fill(' ')); const n = 15, bw = 2, gap = 1, x0 = 5;
+      ['20k', '15k', '10k', ' 5k', '  0'].forEach((l, i) => { const y = Math.round(i * (H - 2) / 4); for (let k = 0; k < 3; k++) g[y][k] = l[k]; });
+      const grow = Math.min(1, (t % 9) / 4);
+      for (let b = 0; b < n; b++) { const base = Math.pow((b + 1) / n, 1.8), tot = Math.max(1, Math.round(base * (H - 2) * grow));
+        const p1 = Math.round(tot * .55), p2 = Math.round(tot * .3);
+        for (let h = 0; h < tot; h++) { const y = H - 2 - h; const c = h < p1 ? '#' : h < p1 + p2 ? '+' : ':';
+          for (let w = 0; w < bw; w++) { const x = x0 + b * (bw + gap) + w; if (x < W && y >= 0) g[y][x] = c; } } }
+      for (let x = 4; x < W; x++) g[H - 1][x] = '-';
+      return g.map(r => r.join('')).join('\n'); },
+    dona(t, W, H) {
+      const out = Array(W * H).fill(' '), z = Array(W * H).fill(0);
+      const A = t * .9, B = t * .45, cA = Math.cos(A), sA = Math.sin(A), cB = Math.cos(B), sB = Math.sin(B);
+      const cx = W * .64, sc = Math.min(W * .3, H * .78);
+      for (let j = 0; j < 6.283; j += .06) { const ct = Math.cos(j), st = Math.sin(j);
+        for (let i = 0; i < 6.283; i += .018) { const sp = Math.sin(i), cp = Math.cos(i), h = ct + 2;
+          const D = 1 / (sp * h * sA + st * cA + 5), tt = sp * h * cA - st * sA;
+          const x = Math.round(cx + sc * D * (cp * h * cB - tt * sB) * 1.9), y = Math.round(H / 2 + sc * D * (cp * h * sB + tt * cB) * .95);
+          const N = (st * sA - sp * ct * cA) * cB - sp * ct * sA - st * cA - cp * ct * sB;
+          const o = x + W * y; if (y >= 0 && y < H && x >= 0 && x < W && D > z[o]) { z[o] = D; out[o] = C(Math.max(0, N) / 1.42 * .92 + .08); } } }
+      let s = ''; for (let y = 0; y < H; y++) s += out.slice(y * W, y * W + W).join('') + '\n'; return s; },
+    olas(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const h = Math.sin(x * .25 + t * 2.1) * 2 + Math.sin(x * .11 - t * 1.4) * 2 + H * .55; const d = y - (H - h);
+      s += d < 0 ? ' ' : C(Math.max(.1, 1 - d / 7)); } s += '\n'; } return s; },
+    esfera(t, W, H) { let s = ''; const R = Math.min(W / 2.2, H) * .46;
+      for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) { const nx = (x - W / 2) / 2.1 / R, ny = (y - H / 2) / R, q = nx * nx + ny * ny;
+        if (q > 1) { s += ' '; continue; } const nz = Math.sqrt(1 - q), lx = Math.cos(t), lz = Math.sin(t);
+        const lon = Math.atan2(nx, nz) + t * .8, grid = (Math.abs(Math.sin(lon * 4)) < .12 || Math.abs(Math.sin(ny * 6)) < .1) ? .25 : 0;
+        s += C(Math.max(.06, nx * lx * .7 + nz * (lz * .5 + .5) * .6 - ny * .2) * .85 + grid); } s += '\n'; } return s; },
+    lluvia(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const sp = 3 + (x * 7919 % 11), head = (t * sp + x * 13.7) % (H + 10), d = head - y;
+      s += d >= 0 && d < 6 ? (d < 1 ? '@' : '01#+:.'[Math.floor(d)] ) : ' '; } s += '\n'; } return s; },
+    cubo(t, W, H) { const g = Array.from({ length: H }, () => Array(W).fill(' '));
+      const P = [-1, 1].flatMap(a => [-1, 1].flatMap(b => [-1, 1].map(c => [a, b, c])));
+      const E = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+      const ay = t * .8, ax = t * .5, sc = Math.min(W / 2.2, H) * .32;
+      const pr = ([x, y, z]) => { let X = x * Math.cos(ay) + z * Math.sin(ay), Z = -x * Math.sin(ay) + z * Math.cos(ay);
+        let Y = y * Math.cos(ax) - Z * Math.sin(ax); Z = y * Math.sin(ax) + Z * Math.cos(ax); const k = 3 / (Z + 4);
+        return [W / 2 + X * k * sc * 2.1, H / 2 + Y * k * sc, Z]; };
+      const Q = P.map(pr);
+      E.forEach(([a, b]) => { const [x1, y1, z1] = Q[a], [x2, y2, z2] = Q[b], n = 60;
+        for (let i = 0; i <= n; i++) { const x = Math.round(x1 + (x2 - x1) * i / n), y = Math.round(y1 + (y2 - y1) * i / n), z = z1 + (z2 - z1) * i / n;
+          if (y >= 0 && y < H && x >= 0 && x < W) g[y][x] = z < -.3 ? '#' : z < .4 ? '+' : ':'; } });
+      Q.forEach(([x, y]) => { x = Math.round(x); y = Math.round(y); if (y >= 0 && y < H && x >= 0 && x < W) g[y][x] = '@'; });
+      return g.map(r => r.join('')).join('\n'); },
+    ondas(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const dx = x / W - .5, dy = (y / H - .5) * .5, r = Math.hypot(dx, dy);
+      const v = Math.sin(r * 42 - t * 2.6) * .55 + Math.sin(x * .07 + y * .19 + t) * .45;
+      s += C((v * .5 + .5) * Math.min(1, r * 3)); } s += '\n'; } return s; },
+    carga(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const a = Math.atan2(y - H / 2, (x - W / 2) / 2), r = Math.hypot((x - W / 2) / 2, y - H / 2);
+      s += r > 3 && r < 4.6 ? C(((a + Math.PI - t * 4) % 6.283 + 6.283) % 6.283 / 6.283) : ' '; } s += '\n'; } return s; }
+  };
+  const init = () => {
+    const items = [...document.querySelectorAll('pre[data-ascii]')].map(pre => ({ pre, fn: S[pre.dataset.ascii] || S.olas,
+      W: +pre.dataset.cols || 60, H: +pre.dataset.rows || 20, seen: true }));
+    const fit = () => items.forEach(it => { const w = it.pre.parentElement.clientWidth; if (w) it.pre.style.fontSize = (w / (it.W * .6)) + 'px'; });
+    fit(); addEventListener('resize', fit);
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver(es => es.forEach(e => { const it = items.find(i => i.pre === e.target); if (it) it.seen = e.isIntersecting; }));
+      items.forEach(it => io.observe(it.pre)); }
+    let last = 0; const loop = now => { if (now - last > 60) { last = now; const t = now / 1000;
+      items.forEach(it => { if (it.seen) it.pre.textContent = it.fn(t, it.W, it.H); }); } requestAnimationFrame(loop); };
+    items.forEach(it => { it.pre.textContent = it.fn(0, it.W, it.H); }); requestAnimationFrame(loop);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
+})();
+</script>
+</body>
+</html>

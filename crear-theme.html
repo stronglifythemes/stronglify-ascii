@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="builder" content="Stronglify">
+<link rel="icon" type="image/x-icon" href="https://media.stronglify.com/295/favicon-stronglify-ascii-amarillo-1795213073.svg">
+<title>Crear un theme en Stronglify: plantillas, bloques y parámetros · Stronglify</title>
+<meta name="description" content="En este tutorial podrás encontrar cómo podrías hacer themes con facilidad.">
+<meta name="robots" content="index">
+<link rel="canonical" href="https://stronglifythemes.github.io/crear-theme"><style>
+html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}
+fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}img{max-width:100%;height:auto}
+</style><style>
+:root { --negro:#ffffff; --ultra:#ffd400; --ultra-claro:#0a0a0a; --brillo:#0a0a0a; --texto:#0a0a0a; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace; --display:"Space Grotesk",system-ui,sans-serif; }
+*,*::before,*::after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body.strong-ascii { margin:0; background:var(--negro); color:var(--texto); font-family:var(--display); }
+.strong-ascii a { color:inherit; }
+.strong-ascii pre[data-ascii] { margin:0; font-family:var(--mono); line-height:1; letter-spacing:0; white-space:pre; overflow:hidden; color:var(--ultra-claro); text-shadow:0 0 .3em #ffd400, 0 0 .9em #ffd40099; user-select:none; pointer-events:none; }
+.sa-loader { position:fixed; inset:0; z-index:100; display:grid; place-content:center; justify-items:center; gap:1rem; background:#fff; animation:sa-sale .6s ease 1.6s forwards; }
+.sa-loader pre { width:min(70vw,22rem); }
+.sa-loader span { font-family:var(--mono); letter-spacing:.4em; text-transform:uppercase; color:var(--brillo); }
+@keyframes sa-sale { to { opacity:0; visibility:hidden; } }
+.sa-header { position:sticky; top:0; z-index:20; display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1rem clamp(1rem,4vw,3rem); background:#fffd; backdrop-filter:blur(8px); border-bottom:2px solid #0a0a0a; font-family:var(--mono); }
+.sa-brand { font-weight:700; letter-spacing:.18em; text-transform:uppercase; text-decoration:none; color:var(--brillo); }
+.sa-header nav { display:flex; gap:clamp(.8rem,3vw,2rem); flex-wrap:wrap; }
+.sa-header nav a { text-decoration:none; font-size:.9rem; opacity:.85; }
+.sa-header nav a:hover { color:var(--brillo); opacity:1; }
+.sa-hero { position:relative; isolation:isolate; overflow:hidden; display:grid; align-items:center; min-height:calc(100svh - 3.6rem); padding:clamp(1.5rem,6vw,6rem); }
+.sa-hero-campo { position:absolute; inset:0; z-index:-1; display:grid; align-content:center; }
+.sa-hero-copy { max-width:44rem; display:grid; gap:1.2rem; }
+.sa-hero h1 { margin:0; font-size:clamp(3.5rem,11vw,10rem); line-height:.86; letter-spacing:-.05em; text-transform:uppercase; }
+.sa-hero p { margin:0; max-width:32ch; font-size:clamp(1.1rem,2vw,1.45rem); line-height:1.45; opacity:.9; }
+.sa-boton { justify-self:start; display:inline-block; padding:.95rem 1.5rem; background:var(--ultra); color:#0a0a0a; text-decoration:none; font-family:var(--mono); font-weight:700; letter-spacing:.06em; border:2px solid #0a0a0a; box-shadow:4px 4px 0 #0a0a0a; }
+.sa-boton:hover { background:#0a0a0a; color:#ffd400; }
+.sa-boton:focus-visible, .sa-header a:focus-visible { outline:2px solid var(--brillo); outline-offset:3px; }
+.sa-cinta { overflow:hidden; background:var(--ultra); color:#000; font-family:var(--mono); font-weight:700; text-transform:uppercase; letter-spacing:.12em; border-block:1px solid var(--ultra-claro); }
+.sa-cinta-track { display:flex; width:max-content; animation:sa-cinta 22s linear infinite; }
+.sa-cinta span { padding:.9rem 2rem; white-space:nowrap; }
+@keyframes sa-cinta { to { transform:translateX(-50%); } }
+.sa-servicios { padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); }
+.sa-servicios h2, .sa-split h2, .sa-cta h2 { margin:0 0 clamp(1.5rem,4vw,3rem); font-size:clamp(2.6rem,7vw,6.5rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase; }
+.sa-servicios-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; }
+.sa-card { padding:clamp(1.2rem,3vw,2rem); border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; display:grid; gap:.8rem; align-content:start; transition:background .3s; }
+.sa-card:hover { background:#0a0a0a1f; }
+.sa-card pre { width:100%; }
+.sa-card h3 { margin:.4rem 0 0; font-size:clamp(1.4rem,2.4vw,2rem); text-transform:uppercase; letter-spacing:-.02em; }
+.sa-card p { margin:0; line-height:1.55; opacity:.85; }
+.sa-split { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:center; gap:clamp(1.5rem,5vw,5rem); padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); background:linear-gradient(90deg,#fff6bf,#fff 70%); border-block:1px solid #0a0a0a66; }
+.sa-split ol { list-style:none; margin:0; padding:0; display:grid; gap:1.4rem; counter-reset:paso; }
+.sa-split li { display:grid; gap:.3rem; padding-left:3.2rem; position:relative; counter-increment:paso; }
+.sa-split li::before { content:counter(paso,decimal-leading-zero); position:absolute; left:0; top:.1rem; font-family:var(--mono); color:var(--ultra-claro); font-weight:700; }
+.sa-split li strong { font-size:1.3rem; text-transform:uppercase; }
+.sa-split li span { opacity:.8; line-height:1.5; }
+.sa-cifras { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); background:var(--ultra); }
+.sa-cifras div { padding:clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2.5rem); display:grid; gap:.4rem; border-right:1px solid #000; }
+.sa-cifras strong { font-family:var(--mono); font-size:clamp(2.6rem,6vw,5rem); line-height:1; color:#0a0a0a; }
+.sa-cifras span { color:#000; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+.sa-cta { position:relative; isolation:isolate; overflow:hidden; display:grid; justify-items:center; align-content:center; gap:1rem; min-height:clamp(26rem,55vw,40rem); padding:clamp(3rem,8vw,7rem) 1.25rem; text-align:center; }
+.sa-cta-campo { position:absolute; inset:0; z-index:-1; display:grid; align-content:center; opacity:.55; }
+.sa-cta::before { content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse at center,#fff 0%,#fffc 30%,#fff0 70%); }
+.sa-cta h2 { margin-bottom:0; }
+.sa-cta p { margin:0 0 .6rem; max-width:40ch; font-size:clamp(1.05rem,1.8vw,1.3rem); opacity:.9; }
+.sa-cta .sa-boton { justify-self:center; }
+.sa-footer { border-top:1px solid #0a0a0a; }
+.sa-footer pre { opacity:.6; }
+.sa-footer div { display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1.5rem clamp(1rem,4vw,3rem); font-family:var(--mono); font-size:.9rem; }
+.sa-footer nav { display:flex; gap:1.2rem; flex-wrap:wrap; }
+.sa-footer nav a { text-decoration:none; opacity:.8; }
+.sa-page-hero { position:relative; isolation:isolate; overflow:hidden; display:grid; align-content:end; gap:.9rem; min-height:clamp(20rem,45vw,32rem); padding:clamp(2rem,6vw,5rem) clamp(1rem,4vw,3rem); border-bottom:1px solid #0a0a0a; }
+.sa-page-hero pre { position:absolute; inset:0; z-index:-1; display:grid; align-content:center; opacity:.6; }
+.sa-page-hero h1 { margin:0; font-size:clamp(3rem,9vw,8rem); line-height:.88; letter-spacing:-.05em; text-transform:uppercase; }
+.sa-page-hero p { margin:0; max-width:40ch; font-size:clamp(1.05rem,1.8vw,1.3rem); opacity:.9; }
+.sa-blog-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr)); border-left:1px solid #0a0a0a; }
+.sa-post { display:grid; gap:.7rem; align-content:start; padding:clamp(1.2rem,3vw,2rem); border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; text-decoration:none; transition:background .3s; }
+.sa-post:hover, .sa-post:focus-visible { background:#0a0a0a1f; outline:none; }
+.sa-post h2 { margin:.3rem 0 0; font-size:clamp(1.4rem,2.4vw,2rem); line-height:1.05; text-transform:uppercase; }
+.sa-post p { margin:0; opacity:.85; line-height:1.55; }
+.sa-post-fecha { font-family:var(--mono); font-size:.85rem; color:var(--brillo); letter-spacing:.08em; }
+.sa-article-hero { min-height:clamp(24rem,55vw,38rem); }
+.sa-prose { width:min(calc(100% - 2rem),46rem); margin:clamp(2.5rem,6vw,5rem) auto; font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:1.75; }
+.sa-prose h2 { margin:2.2rem 0 .6rem; font-size:clamp(1.6rem,3vw,2.4rem); text-transform:uppercase; letter-spacing:-.02em; color:var(--brillo); }
+.sa-prose a { color:var(--brillo); }
+.sa-prose blockquote { margin:2rem 0; padding:1rem 1.4rem; border-left:3px solid var(--ultra); background:#0a0a0a1a; font-family:var(--mono); }
+.sa-prose pre { padding:1rem; border:1px solid #0a0a0a; overflow:auto; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-blank { min-height:40vh; }
+.sa-botones { display:flex; flex-wrap:wrap; gap:.8rem; }
+.sa-boton-linea { background:transparent; box-shadow:none; }
+.sa-testimonios, .sa-faq { padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); }
+.sa-testimonios h2, .sa-faq h2 { margin:0 0 clamp(1.5rem,4vw,3rem); font-size:clamp(2.6rem,7vw,6.5rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase; }
+.sa-testimonios-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; }
+.sa-testimonios figure { margin:0; padding:clamp(1.4rem,3vw,2.2rem); display:grid; gap:1.2rem; align-content:space-between; border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; }
+.sa-testimonios blockquote { margin:0; font-size:clamp(1.1rem,1.8vw,1.35rem); line-height:1.5; }
+.sa-testimonios blockquote::before { content:"> "; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-testimonios figcaption { font-family:var(--mono); font-size:.9rem; color:var(--brillo); }
+.sa-faq details { border-top:1px solid #0a0a0a; padding:1.2rem 0; }
+.sa-faq details:last-of-type { border-bottom:1px solid #0a0a0a; }
+.sa-faq summary { cursor:pointer; font-size:clamp(1.2rem,2.2vw,1.7rem); font-weight:700; list-style:none; }
+.sa-faq summary::before { content:"+ "; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-faq details[open] summary::before { content:"- "; }
+.sa-faq p { margin:.8rem 0 0; max-width:60ch; line-height:1.6; opacity:.88; }
+.sa-prose ul ul { margin-top:.4rem; }
+.sa-prose code { font-family:var(--mono); color:var(--brillo); }
+.sa-planes { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); gap:0; border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; margin:2rem 0; }
+.sa-planes div { padding:1.5rem; border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; }
+.sa-planes strong { display:block; font-family:var(--mono); font-size:2.6rem; color:#fff; }
+.sa-hero-centro { justify-items:center; text-align:center; align-content:start; gap:1.3rem; padding-top:clamp(4rem,9vw,8rem); min-height:auto; }
+.sa-hero-centro h1 { max-width:14ch; }
+.sa-hero-centro p { max-width:46ch; margin:0 auto; }
+.sa-hero-centro .sa-botones { justify-content:center; }
+.sa-demo { width:min(100%,76rem); margin-top:clamp(1.5rem,4vw,3rem); border:2px solid #0a0a0a; background:#0a0a0a; color:#fff; box-shadow:8px 8px 0 #ffd400; text-align:left; }
+.sa-demo-barra { display:flex; align-items:center; gap:.4rem; padding:.6rem .9rem; border-bottom:1px solid #0a0a0a; font-family:var(--mono); font-size:.8rem; }
+.sa-demo-barra span { width:.6rem; height:.6rem; border:1px solid var(--ultra-claro); }
+.sa-demo-barra em { margin-left:.8rem; font-style:normal; opacity:.7; }
+.sa-demo pre { padding:1rem; }
+.sa-about { padding:clamp(3.5rem,9vw,8rem) clamp(1rem,4vw,3rem); border-top:1px solid #0a0a0a; }
+.sa-about h2 { margin:0; max-width:24ch; font-size:clamp(2rem,5vw,4.6rem); line-height:1.02; letter-spacing:-.035em; font-weight:500; }
+.sa-features { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; }
+.sa-feature { padding:clamp(1.2rem,3vw,2rem); border-right:1px solid #0a0a0a; display:grid; gap:1rem; align-content:start; min-width:0; }
+.sa-feature:last-child { border-right:0; }
+.sa-feature h3 { margin:0; font-family:var(--mono); font-size:.9rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brillo); }
+.sa-agentic-input { border:1px solid var(--ultra-claro); padding:.9rem 1rem; }
+.sa-agentic-input p { margin:0 0 .5rem; line-height:1.45; }
+.sa-agentic-input span { font-family:var(--mono); font-size:.8rem; color:var(--brillo); }
+.sa-agentic-pasos { list-style:none; margin:0; padding:0; display:grid; gap:.45rem; font-size:.95rem; }
+.sa-agentic-pasos li { opacity:.25; animation:sa-paso 10s steps(1) infinite; }
+.sa-agentic-pasos li::before { content:"[ ] "; font-family:var(--mono); color:var(--ultra-claro); }
+.sa-agentic-pasos li:nth-child(1) { animation-delay:0s; } .sa-agentic-pasos li:nth-child(2) { animation-delay:.9s; } .sa-agentic-pasos li:nth-child(3) { animation-delay:1.8s; }
+.sa-agentic-pasos li:nth-child(4) { animation-delay:2.7s; } .sa-agentic-pasos li:nth-child(5) { animation-delay:3.6s; } .sa-agentic-pasos li:nth-child(6) { animation-delay:4.5s; }
+.sa-agentic-pasos li:nth-child(7) { animation-delay:5.4s; } .sa-agentic-pasos li:nth-child(8) { animation-delay:6.3s; } .sa-agentic-pasos li:nth-child(9) { animation-delay:7.2s; }
+@keyframes sa-paso { 0% { opacity:.25; } 1% { opacity:1; } 90% { opacity:1; } 100% { opacity:.25; } }
+.sa-agentic-track { height:.45rem; background:#0a0a0a1a; overflow:hidden; }
+.sa-agentic-track div { height:100%; background:#ffd400; box-shadow:none; animation:sa-progreso 10s linear infinite; }
+@keyframes sa-progreso { from { width:0; } 82% { width:100%; } to { width:100%; } }
+.sa-trafico p { margin:-.6rem 0 0; font-size:.85rem; opacity:.7; }
+.sa-leyenda { display:flex; flex-wrap:wrap; gap:1rem; font-family:var(--mono); font-size:.8rem; }
+.sa-leyenda span::before { font-family:var(--mono); margin-right:.35rem; color:var(--ultra-claro); }
+.sa-leyenda .l1::before { content:"#"; } .sa-leyenda .l2::before { content:"+"; } .sa-leyenda .l3::before { content:":"; }
+.sa-sub { margin:-1.5rem 0 2rem; max-width:52ch; font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:1.55; opacity:.85; }
+.sa-split .sa-sub { margin:-1rem 0 1.5rem; }
+.sa-planes-sec { padding:clamp(3rem,8vw,7rem) clamp(1rem,4vw,3rem); border-top:1px solid #0a0a0a; }
+.sa-planes-sec h2 { margin:0 0 clamp(1.5rem,4vw,3rem); font-size:clamp(2.6rem,7vw,6.5rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase; }
+.sa-planes-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); border-top:1px solid #0a0a0a; border-left:1px solid #0a0a0a; }
+.sa-plan { padding:clamp(1.4rem,3vw,2.2rem); border-right:1px solid #0a0a0a; border-bottom:1px solid #0a0a0a; display:grid; gap:.9rem; align-content:start; }
+.sa-plan:last-child { background:var(--ultra); }
+.sa-plan h3 { margin:0; font-size:1.4rem; text-transform:uppercase; }
+.sa-precio { margin:0; display:flex; align-items:baseline; gap:.4rem; }
+.sa-precio strong { font-family:var(--mono); font-size:clamp(2.8rem,6vw,4.4rem); line-height:1; color:#0a0a0a; }
+.sa-precio span { opacity:.7; }
+.sa-plan p { margin:0; line-height:1.5; }
+.sa-plan .sa-boton { margin-top:.4rem; }
+.sa-plan:last-child .sa-boton { background:#0a0a0a; color:#ffd400; }
+@media (max-width:60rem) { .sa-features { grid-template-columns:minmax(0,1fr); } .sa-feature { border-right:0; border-bottom:1px solid #0a0a0a; } }
+@media (max-width:48rem) {
+  .sa-split { grid-template-columns:minmax(0,1fr); }
+  .sa-hero-campo { opacity:.55; }
+}
+ 
+.sa-demo pre[data-ascii], .sa-demo-barra { color:#ffd400; }
+.sa-demo pre[data-ascii] { text-shadow:0 0 .35em #ffd40099; }
+.sa-demo-barra span { border-color:#ffd400; }
+.sa-cinta { color:#0a0a0a; border-block:2px solid #0a0a0a; }
+.sa-header nav a:hover, .sa-footer nav a:hover { background:#ffd400; color:#0a0a0a; opacity:1; }
+.sa-post-fecha, .sa-agentic-input span, .sa-testimonios figcaption, .sa-leyenda { color:#0a0a0a; }
+.sa-agentic-input { background:#fff6bf; border-color:#0a0a0a; }
+.sa-prose blockquote { background:#fff6bf; border-left-color:#ffd400; }
+.sa-prose h2, .sa-prose a, .sa-prose code { color:#0a0a0a; }
+.sa-prose h2 { box-shadow:inset 0 -.35em 0 #ffd400; display:inline; }
+.sa-prose pre { color:#0a0a0a; background:#fff6bf; }
+.sa-card:hover, .sa-post:hover, .sa-post:focus-visible { background:#ffd40026; }
+.sa-plan:last-child { background:#ffd400; }
+.sa-faq summary::before, .sa-testimonios blockquote::before, .sa-split li::before { color:#0a0a0a; background:#ffd400; padding:0 .2em; }
+</style><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></head>
+<body class="strong-ascii">
+  <div class="sa-loader" aria-hidden="true"><pre data-ascii="carga" data-cols="34" data-rows="9"></pre><span>Stronglify</span></div>
+<header class="sa-header">
+  <a class="sa-brand" href="./">Stronglify</a>
+  <nav aria-label="Navegación principal">
+    
+    <a href="./">Inicio</a>
+    
+    <a href="./blog">Blog</a>
+    
+    <a href="./planes">Planes</a>
+    
+    <a href="./acerca-de">Nosotros</a>
+    
+    <a href="./contacto">Demo</a>
+    
+  </nav>
+</header>
+
+<main class="sa-main sa-page">
+  <section class="sa-page-hero sa-article-hero">
+    <pre data-ascii="cubo" data-cols="140" data-rows="30" aria-hidden="true"></pre>
+    <span class="sa-post-fecha">Tutorial</span>
+    <h1>Crear un theme en Stronglify: plantillas, bloques y parámetros</h1>
+  </section>
+  <article class="sa-prose"><p>Cómo se compone un diseño en Stronglify, cómo crearlo paso a paso y cómo nombrar sus parámetros para que el equipo entienda tu trabajo seis meses después.</p>
+<h2>Cómo se compone un diseño</h2>
+<p>Un diseño no es un archivo: es un árbol de contención. Cada nivel envuelve al siguiente y decide qué puede cambiar dentro de él.</p>
+<p>Antes de tocar nada conviene tener claro el modelo, porque todo lo demás se deduce de él. Un <strong>diseño</strong> contiene plantillas y bloques. Una <strong>plantilla</strong> arma la estructura de un tipo de página y puede incluir bloques. Un <strong>bloque</strong> es una sección reutilizable. Y en cualquiera de esos tres niveles viven <strong>parámetros</strong>, que son los huecos editables del contenido.</p>
+<ul>
+  <li><strong>Diseño</strong> — la identidad visual: tipografías, color, tratamiento de imagen. Sus parámetros aplican a todo el sitio (<code>logo</code>, <code>menu</code>, <code>footer_description</code>).
+    <ul>
+      <li><strong>Plantilla</strong> — la estructura de un tipo de página: index, article, product. Sus parámetros cambian en cada página (<code>titulo</code>, <code>contenido</code>, <code>imagen_principal</code>).
+        <ul>
+          <li><strong>Bloque</strong> — una sección reutilizable: hero, testimonios, CTA, FAQ. Sus parámetros se repiten con la sección (<code>cta_titulo</code>, <code>cta_boton_url</code>).</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<p><em>Los bloques pertenecen al diseño, no a la plantilla: se crean una vez y se incluyen en las plantillas que los necesiten. Arriba aparecen anidados para mostrar dónde se ven, no dónde viven.</em></p>
+<h2>El diseño</h2>
+<blockquote>
+<p><strong>NOTA DE VOCABULARIO.</strong> En la aplicación esto se llama <strong>Diseño</strong>, no «tema». Si buscas la palabra «tema» en la interfaz no la vas a encontrar: el menú dice <strong>Diseños</strong> y el botón dice <strong>Crear diseño</strong>. En documentación técnica y en la API sigue apareciendo como <code>theme</code>.</p>
+</blockquote>
+<p>Un diseño define la identidad visual y estética general de un sitio: estilo gráfico, tipografías, colores, tratamiento de imágenes, espaciados. Establece cómo debe verse y sentirse el sitio.</p>
+<p>Un mismo diseño puede contener múltiples plantillas, todas bajo esa identidad. Por ejemplo, un diseño llamado <strong>Salvaje</strong> podría usar fotografía de naturaleza, una combinación tipográfica concreta y una paleta específica; dentro de él conviven plantillas distintas para cada tipo de página. El diseño define la estética; las plantillas definen la estructura.</p>
+<h3>Qué configuras a nivel de diseño</h3>
+<ul>
+  <li><strong>Nombre</strong> — obligatorio. Es como lo identificará tu equipo en la lista de diseños.</li>
+  <li><strong>Miniatura</strong> — opcional. Una URL de imagen que se muestra en la tarjeta del diseño. Puedes previsualizarla antes de guardar.</li>
+  <li><strong>URL de vista previa</strong> — opcional. Un enlace a un sitio de referencia que muestra el diseño en funcionamiento.</li>
+  <li><strong>Aplicar normalize CSS</strong> — activado por defecto. Neutraliza los estilos por defecto del navegador antes de aplicar los tuyos. Desactívalo sólo si tu CSS ya incluye su propio reset.</li>
+  <li><strong>Tipo de diseño</strong> — Privado o Nativo. Sólo visible para personal de Stronglify; los diseños que creas quedan como Privados.</li>
+  <li><strong>Miembros</strong> — comparte el diseño con otras personas. Disponible según tu plan.</li>
+</ul>
+<blockquote>
+<p><strong>LÍMITE DE PLAN.</strong> La cantidad de diseños que puedes crear depende de tu membresía. Cuando llegas al tope, el botón <strong>Crear diseño</strong> se deshabilita y aparece el aviso con tu máximo. Clonar un diseño existente también consume cupo.</p>
+</blockquote>
+<h2>Plantillas</h2>
+<p>Una plantilla define la estructura y la disposición de un tipo específico de página dentro de un diseño. Nombres habituales: <code>index</code>, <code>article</code>, <code>collection</code>, <code>product</code>, <code>page</code>.</p>
+<p>Cada plantilla determina cómo se organizan los elementos de ese tipo de página. Dos plantillas del mismo diseño pueden tener estructuras completamente distintas, pero comparten la identidad visual. Una plantilla puede incluir bloques, aunque no está obligada a construirse sólo con ellos.</p>
+<h3>Normal o Especial</h3>
+<p>Al crear una plantilla eliges su tipo, y la diferencia es concreta:</p>
+<ul>
+  <li><strong>Normal</strong> — el caso por defecto. Sirve para artículos, listados, páginas de contenido.</li>
+  <li><strong>Especial</strong> — habilita la sección <strong>Configuración avanzada</strong> en las páginas que la usan, donde puedes definir el <strong>canonical</strong> y marcar una página como <strong>página de inicio</strong> del sitio.</li>
+</ul>
+<blockquote>
+<p><strong>YA TIENES UNA.</strong> Al crear un diseño se genera automáticamente una plantilla llamada <strong>Index</strong>, de tipo Especial, con contenido de ejemplo. Es tu punto de partida: ábrela y reemplaza su contenido en lugar de crear otra desde cero.</p>
+</blockquote>
+<h2>Bloques</h2>
+<p>Un bloque es una sección o componente reutilizable. Los bloques permiten dividir una plantilla en partes independientes que puedes reordenar y reutilizar entre plantillas.</p>
+<p>Ejemplos típicos: hero, galería, lista de artículos, características, testimonios, preguntas frecuentes, CTA, footer. Una plantilla <code>index</code> podría componerse de hero, categorías destacadas, artículos recientes, CTA y footer.</p>
+<blockquote>
+<p><strong>DÓNDE VIVE UN BLOQUE.</strong> Los bloques pertenecen al <strong>diseño</strong>, no a una plantilla. Se crean una vez desde la carpeta <strong>Bloques</strong> y después se incluyen y ordenan dentro de las plantillas que los necesiten. Si creas el mismo bloque dos veces para dos plantillas, estás duplicando trabajo.</p>
+</blockquote>
+<p>Cada bloque puede tener sus propios parámetros, que permiten cambiar su contenido sin tocar su estructura. Esto tiene una consecuencia práctica importante: <strong>los parámetros de un bloque se convierten en columnas del CSV de edición masiva</strong>. Un bloque bien parametrizado se puede llenar para cientos de páginas desde una hoja de cálculo; uno mal parametrizado obliga a editar página por página.</p>
+<h2>Parámetros</h2>
+<p>Un parámetro es un valor configurable dentro de un diseño, una plantilla o un bloque. Permite cambiar contenido sin tocar el HTML.</p>
+<p>Los parámetros son la frontera entre quien construye el diseño y quien administra el contenido. Todo lo que quieras que alguien pueda editar sin abrir el editor de código tiene que ser un parámetro.</p>
+<h3>Los cuatro ámbitos</h3>
+<p>Lo primero que decides sobre un parámetro no es su tipo, sino a quién pertenece:</p>
+<ul>
+  <li><strong>Diseño</strong> — compartido por todo el sitio. Cambia una vez y se refleja en todas las plantillas que lo usen. Logo, nombre corporativo, menú, redes sociales.</li>
+  <li><strong>Plantilla</strong> — cambia en cada página generada con esa plantilla. Título, contenido, fecha, imagen principal.</li>
+  <li><strong>Bloque</strong> — pertenece a la sección. Se repite cada vez que el bloque aparece. Título del CTA, texto del botón, URL de destino.</li>
+  <li><strong>Global</strong> — existe de forma nativa. No lo creas ni lo eliminas: ya está disponible en todas las plantillas.</li>
+</ul>
+<h4>Sobre los parámetros globales</h4>
+<p>Los globales cubren datos del sitio y de la página que el sistema ya conoce: dominio, nombre del sitio, URL del sitio. A ellos se suman los campos SEO que cada página define por su cuenta y que también puedes usar en las plantillas:</p>
+<ul>
+  <li><strong>Título <code>&lt;title&gt;</code></strong> — el titular de la pestaña y del resultado de búsqueda.</li>
+  <li><strong>Descripción SEO</strong> — la meta description, hasta 500 caracteres.</li>
+  <li><strong>Slug</strong> — el segmento de URL de la página.</li>
+  <li><strong>Canonical</strong> — sólo en plantillas de tipo Especial.</li>
+  <li><strong>Consulta objetivo</strong> y <strong>Estado</strong> (borrador o publicada).</li>
+</ul>
+<p>Estos campos no se pueden crear ni redefinir, pero sí se leen desde la plantilla, y son las mismas columnas que aparecen al descargar el CSV de páginas de un proyecto.</p>
+<h2>Tipos de parámetro</h2>
+<p>Al crear un parámetro eliges su tipo. Estos son los cinco disponibles, con el nombre exacto que verás en la interfaz:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Tipo en la app</th>
+      <th>Qué almacena</th>
+      <th>Cuándo usarlo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Texto</strong></td>
+      <td>Una cadena simple, sin formato.</td>
+      <td>Título, texto de un botón, URL, nombre, texto alternativo de imagen.</td>
+    </tr>
+    <tr>
+      <td><strong>Texto enriquecido</strong></td>
+      <td>HTML producido por un editor visual: negrillas, cursivas, enlaces, listas, encabezados.</td>
+      <td>Contenido editorial que alguien debe poder formatear sin escribir HTML: cuerpo de un artículo, descripción larga.</td>
+    </tr>
+    <tr>
+      <td><strong>HTML</strong></td>
+      <td>HTML crudo, tal cual lo escribes, sin descomponer en campos.</td>
+      <td>Componentes con estructura muy específica que no vale la pena parametrizar campo por campo y que casi no cambian.</td>
+    </tr>
+    <tr>
+      <td><strong>Lista</strong></td>
+      <td>Un conjunto repetible de elementos con la misma estructura interna.</td>
+      <td>Menús, listas de enlaces, logos de aliados, tarjetas, beneficios, testimonios.</td>
+    </tr>
+    <tr>
+      <td><strong>Listas anidadas</strong></td>
+      <td>Una lista cuyos elementos contienen, a su vez, otra lista.</td>
+      <td>Tablas, planes con listas de características, categorías con elementos internos, menús con submenús.</td>
+    </tr>
+  </tbody>
+</table>
+<blockquote>
+<p><strong>LÍMITE DE ANIDAMIENTO.</strong> La interfaz permite anidar hasta <strong>dos niveles</strong>: una lista dentro de una lista. En el nivel más profundo sólo puedes agregar hijos de tipo Texto. Si tu contenido necesita tres niveles, replantea la estructura antes de construirla.</p>
+</blockquote>
+<h3>Regla para elegir el tipo</h3>
+<p>La decisión sale de la estructura del contenido y de cuánta administración necesita, no de cómo se ve:</p>
+<ul>
+  <li><strong>Texto</strong> — un solo valor, sin formato.</li>
+  <li><strong>Texto enriquecido</strong> — contenido editorial que necesita formato y edición visual frecuente.</li>
+  <li><strong>HTML</strong> — estructura compleja que no necesita administrarse campo por campo.</li>
+  <li><strong>Lista</strong> — varios elementos repetibles con la misma estructura.</li>
+  <li><strong>Listas anidadas</strong> — elementos repetibles que contienen otros elementos repetibles.</li>
+</ul>
+<p>El tipo <strong>HTML</strong> no debería ser tu primera opción para contenido que se administra seguido: ahorra trabajo hoy y lo cobra cada vez que alguien tenga que editarlo.</p>
+<h3>Qué pide el formulario</h3>
+<ul>
+  <li><strong>Nombre del campo</strong> — lo que ve quien administra el contenido. Escríbelo en lenguaje humano: «Título del hero», no «h1_txt».</li>
+  <li><strong>Texto de ayuda</strong> — la instrucción que aparece bajo el campo. Es tu única oportunidad de explicar qué espera: «Ingresa la URL de la imagen del logo».</li>
+  <li><strong>Valor por defecto</strong> — lo que se usa si nadie llena el campo. Útil para textos que rara vez cambian.</li>
+</ul>
+<h2>Paso a paso</h2>
+<p>De la lista de diseños a un diseño listo para asignar a un dominio.</p>
+<ol>
+  <li>
+    <p><strong>Abre la sección Diseños.</strong> Entra a <strong>Diseños</strong> desde el menú principal. Verás todos tus diseños —propios y compartidos— con buscador y paginación.</p>
+    <p>Antes de crear uno desde cero, mira si alguno sirve como punto de partida: <strong>clonar</strong> un diseño existente suele ser más rápido que empezar en blanco.</p>
+  </li>
+  <li>
+    <p><strong>Crea el diseño.</strong> Pulsa <strong>Crear diseño</strong> y completa el nombre (obligatorio) y, si quieres, la miniatura como URL de imagen. Al guardar, la aplicación te lleva directo al editor.</p>
+  </li>
+  <li>
+    <p><strong>Reconoce el editor.</strong> Es donde ocurre todo el trabajo real. Tiene tres zonas:</p>
+    <ul>
+      <li><strong>Izquierda</strong> — el árbol: carpetas de Páginas y Bloques, la configuración del diseño y la plantilla base.</li>
+      <li><strong>Centro</strong> — el editor de código de lo que tengas seleccionado, con vista previa en vivo.</li>
+      <li><strong>Derecha</strong> — los parámetros del elemento activo.</li>
+    </ul>
+    <p>Los dos paneles laterales se pueden ocultar y redimensionar; en pantallas pequeñas se abren como cajones.</p>
+  </li>
+  <li>
+    <p><strong>Revisa la configuración.</strong> Antes de crear contenido, abre el engranaje sobre el árbol y confirma nombre, URL de vista previa, miniatura y si quieres aplicar normalize CSS. Todo es editable después.</p>
+  </li>
+  <li>
+    <p><strong>Define lo que es común a todo el sitio.</strong> Ve al nodo <strong>Avanzado → Base</strong> del árbol. Ahí van las piezas que comparten todas las páginas: tipografías, hojas de estilo, scripts de analítica, cabecera y pie.</p>
+    <p>Aprovecha para crear aquí los parámetros de diseño —logo, menú, footer— antes de construir plantillas que los usen.</p>
+  </li>
+  <li>
+    <p><strong>Crea tus plantillas.</strong> En la carpeta <strong>Páginas</strong> pulsa <strong>+</strong>. Dale nombre y elige el tipo (Normal o Especial). Se abre en el editor al crearse.</p>
+    <p>Recuerda que ya tienes una plantilla <strong>Index</strong> creada automáticamente.</p>
+  </li>
+  <li>
+    <p><strong>Crea tus bloques.</strong> En la carpeta <strong>Bloques</strong> pulsa <strong>+</strong>. Sólo pide el nombre. Después los incluyes y ordenas dentro de las plantillas que los necesiten.</p>
+  </li>
+  <li>
+    <p><strong>Parametriza.</strong> Con una plantilla o bloque abierto, usa el panel derecho para declarar sus parámetros. Este es el paso que decide si tu diseño se puede administrar a escala o no: cada hueco que dejes sin parametrizar es un hueco que sólo se puede editar tocando código.</p>
+  </li>
+  <li>
+    <p><strong>Previsualiza y guarda.</strong> Usa el botón de vista previa (el ojo) para ver la plantilla renderizada junto al código, con controles de viewport para revisar cómo responde en móvil y escritorio.</p>
+    <p>Los cambios se guardan de forma explícita. Si intentas salir con cambios pendientes, aparece el aviso <strong>Cambios sin guardar</strong> con las opciones de guardar o descartar.</p>
+  </li>
+  <li>
+    <p><strong>Comparte, si hace falta.</strong> Desde el menú de acciones del diseño puedes compartirlo con otras personas del equipo. Disponible según tu plan.</p>
+  </li>
+</ol>
+<h2>El editor: dónde va cada cosa</h2>
+<p>Tanto el diseño (en <strong>Avanzado → Base</strong>) como cada plantilla se editan a través de las mismas seis posiciones. Elegir la correcta es lo que evita duplicar código entre páginas.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Posición</th>
+      <th>Qué poner ahí</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Código de la página</strong></td>
+      <td>El HTML principal: la estructura visible del documento.</td>
+    </tr>
+    <tr>
+      <td><strong>HTML en <code>&lt;head&gt;</code></strong></td>
+      <td>Fuentes, metaetiquetas, hojas de estilo externas, scripts que deben cargar antes del contenido.</td>
+    </tr>
+    <tr>
+      <td><strong>HTML en <code>&lt;body&gt;</code></strong></td>
+      <td>Scripts que deben ejecutarse al final, widgets de terceros, píxeles de seguimiento.</td>
+    </tr>
+    <tr>
+      <td><strong>Atributos de <code>&lt;body&gt;</code></strong></td>
+      <td>Clases o atributos de datos que necesite el CSS o el JavaScript del sitio.</td>
+    </tr>
+    <tr>
+      <td><strong>Estilos CSS</strong></td>
+      <td>Los estilos propios del diseño o de esa plantilla.</td>
+    </tr>
+    <tr>
+      <td><strong>JavaScript</strong></td>
+      <td>El comportamiento propio del diseño o de esa plantilla.</td>
+    </tr>
+  </tbody>
+</table>
+<blockquote>
+<p><strong>CRITERIO.</strong> Si algo aparece en todas las páginas, va en <strong>Avanzado → Base</strong>. Si es exclusivo de un tipo de página, va en la plantilla. Duplicar en ambos lados es la causa más común de estilos que se pisan entre sí.</p>
+</blockquote>
+<h2>Convención de nombres</h2>
+<p>Los parámetros los nombra quien construye el diseño, pero los lee todo el equipo. Una convención consistente ahorra más tiempo del que parece.</p>
+<p>Las reglas son tres:</p>
+<ul>
+  <li>El identificador va en <strong><code>snake_case</code></strong>, en minúsculas y sin tildes.</li>
+  <li>Lleva <strong>prefijo por zona</strong> cuando aplique: <code>header_</code>, <code>footer_</code>.</li>
+  <li>El identificador es <strong>único dentro de su ámbito</strong>. Dos parámetros del mismo diseño no pueden llamarse igual.</li>
+</ul>
+<p>Esta es la convención recomendada para los parámetros de diseño:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre del campo</th>
+      <th>Identificador</th>
+      <th>Tipo</th>
+      <th>Texto de ayuda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Logo</strong></td>
+      <td><code>logo</code></td>
+      <td>Texto</td>
+      <td>Ingresa la URL de la imagen del logo</td>
+    </tr>
+    <tr>
+      <td><strong>Logo link</strong></td>
+      <td><code>logo_link</code></td>
+      <td>Texto</td>
+      <td>Ingresa la URL del sitio web</td>
+    </tr>
+    <tr>
+      <td><strong>Logo height</strong></td>
+      <td><code>logo_height</code></td>
+      <td>Texto</td>
+      <td>Ingresa el alto del logo</td>
+    </tr>
+    <tr>
+      <td><strong>Logo width</strong></td>
+      <td><code>logo_width</code></td>
+      <td>Texto</td>
+      <td>Ingresa el ancho del logo</td>
+    </tr>
+    <tr>
+      <td><strong>Header CTA title</strong></td>
+      <td><code>header_cta_title</code></td>
+      <td>Texto</td>
+      <td>Ingresa el título del botón del encabezado</td>
+    </tr>
+    <tr>
+      <td><strong>Header CTA link</strong></td>
+      <td><code>header_cta_link</code></td>
+      <td>Texto</td>
+      <td>Ingresa la URL del botón del encabezado</td>
+    </tr>
+    <tr>
+      <td><strong>Menú</strong></td>
+      <td><code>menu</code></td>
+      <td>Lista</td>
+      <td>Agrega los enlaces del menú principal</td>
+    </tr>
+    <tr>
+      <td>↳ <em>Title</em></td>
+      <td><code>title</code></td>
+      <td>Texto (hijo)</td>
+      <td>Ingresa el título del enlace</td>
+    </tr>
+    <tr>
+      <td>↳ <em>Link</em></td>
+      <td><code>link</code></td>
+      <td>Texto (hijo)</td>
+      <td>Ingresa la URL de destino</td>
+    </tr>
+    <tr>
+      <td><strong>Footer menu title</strong></td>
+      <td><code>footer_menu_title</code></td>
+      <td>Texto</td>
+      <td>Ingresa el título del menú del pie</td>
+    </tr>
+    <tr>
+      <td><strong>Footer menu</strong></td>
+      <td><code>footer_menu</code></td>
+      <td>Lista</td>
+      <td>Agrega los enlaces del pie de página</td>
+    </tr>
+    <tr>
+      <td>↳ <em>Title</em></td>
+      <td><code>title</code></td>
+      <td>Texto (hijo)</td>
+      <td>Ingresa el título del enlace</td>
+    </tr>
+    <tr>
+      <td>↳ <em>Link</em></td>
+      <td><code>link</code></td>
+      <td>Texto (hijo)</td>
+      <td>Ingresa la URL de destino</td>
+    </tr>
+    <tr>
+      <td><strong>Footer description</strong></td>
+      <td><code>footer_description</code></td>
+      <td>Texto</td>
+      <td>Ingresa el texto del pie de página</td>
+    </tr>
+    <tr>
+      <td><strong>Footer description corp</strong></td>
+      <td><code>footer_description_corp</code></td>
+      <td>Texto</td>
+      <td>Ingresa el texto final del pie de página</td>
+    </tr>
+    <tr>
+      <td><strong>Footer icons</strong></td>
+      <td><code>footer_icons</code></td>
+      <td>Lista</td>
+      <td>Agrega las redes sociales del pie</td>
+    </tr>
+    <tr>
+      <td>↳ <em>Img</em></td>
+      <td><code>img</code></td>
+      <td>Texto (hijo)</td>
+      <td>Ingresa la URL del ícono</td>
+    </tr>
+    <tr>
+      <td>↳ <em>Name</em></td>
+      <td><code>name</code></td>
+      <td>Texto (hijo)</td>
+      <td>Ingresa el nombre de la red social</td>
+    </tr>
+  </tbody>
+</table>
+<blockquote>
+<p><strong>CUIDADO CON ESTO.</strong> El menú principal y el menú del pie son dos parámetros distintos y necesitan identificadores distintos: <code>menu</code> y <code>footer_menu</code>. Reutilizar el mismo identificador es un error silencioso, de los que sólo se notan cuando el pie de página muestra los enlaces del encabezado.</p>
+</blockquote>
+<h2>Qué sigue</h2>
+<p>Un diseño terminado no es todavía un sitio. Es la pieza que hace posibles todos los sitios que se construyan con él. La cadena completa es esta:</p>
+<ol>
+  <li><strong>Diseño</strong> — plantillas, bloques y parámetros. Lo que acabas de construir.</li>
+  <li><strong>Dominio</strong> — se le asigna un diseño. Define la identidad del sitio.</li>
+  <li><strong>Proyecto</strong> — agrupa páginas que comparten una plantilla.</li>
+  <li><strong>Página</strong> — llena los parámetros y genera HTML publicable.</li>
+</ol>
+<p>El siguiente paso es asignar el diseño a un dominio. A partir de ahí, cada proyecto de ese dominio elige una de tus plantillas, y cada página llena los parámetros que definiste. Si parametrizaste bien, esas páginas se pueden crear y actualizar de a cientos desde la edición masiva, sin volver a abrir el editor de código.</p>
+<blockquote>
+<p><strong>LA PRUEBA DE FUEGO.</strong> Descarga el CSV de un bloque desde la edición masiva de un proyecto. Si las columnas que ves alcanzan para llenar la sección completa sin tocar el editor, tu diseño está bien parametrizado.</p>
+</blockquote>
+<p><em>Guía de creación de diseños · Stronglify. Los nombres en negrilla corresponden a la interfaz en español de la aplicación.</em></p></article>
+</main>
+<footer class="sa-footer">
+  <pre data-ascii="lluvia" data-cols="140" data-rows="8" aria-hidden="true"></pre>
+  <div>
+    <a class="sa-brand" href="./">Stronglify</a>
+    <nav aria-label="Navegación del pie">
+      
+      <a href="./">Inicio</a>
+      
+      <a href="./blog">Blog</a>
+      
+      <a href="./planes">Planes</a>
+      
+      <a href="./acerca-de">Nosotros</a>
+      
+      <a href="./contacto">Demo</a>
+      
+    </nav>
+    <span>CMS agéntico enfocado en SEO</span>
+  </div>
+</footer>
+<script>
+(() => {
+  const RAMP = ' .,:;-=+*#%@';
+  const L = RAMP.length - 1;
+  const C = v => RAMP[Math.max(0, Math.min(L, Math.round(v * L)))];
+  const S = {
+    ventana(t, W, H) { const g = Array.from({ length: H }, () => Array(W).fill(' '));
+      const put = (x, y, str) => { for (let i = 0; i < str.length; i++) if (y >= 0 && y < H && x + i >= 0 && x + i < W) g[y][x + i] = str[i]; };
+      const side = 18; for (let y = 0; y < H; y++) g[y][side] = '|';
+      ['STRONGLIFY', '', '> Sitios', '  Diseños', '  Medios', '  Agentes', '  Publicar'].forEach((s, i) => put(2, 1 + i * 2, s));
+      put(side + 3, 1, 'Proyecto: landings por ciudad'); put(side + 3, 2, '-'.repeat(W - side - 6));
+      const n = Math.floor(t * 4) % 40, rows = H - 8;
+      for (let r = 0; r < rows; r++) { const k = n - rows + r + 1; if (k < 0) continue; const ok = r < rows - 1;
+        put(side + 3, 4 + r, (ok ? '[x] ' : '[' + '|/-\\'[Math.floor(t * 10) % 4] + '] ') + '/mantenimiento-piscinas-' + ['bogota','medellin','cali','barranquilla','cartagena','pereira','manizales','bucaramanga','santa-marta','cucuta','ibague','villavicencio'][k % 12] + '-' + (k + 1)); }
+      const pct = Math.min(100, Math.round(n / 39 * 100)), bw = W - side - 16, fill = Math.round(bw * pct / 100);
+      put(side + 3, H - 2, '[' + '#'.repeat(fill) + '.'.repeat(bw - fill) + '] ' + pct + '%');
+      return g.map(r => r.join('')).join('\n'); },
+    barras(t, W, H) { const g = Array.from({ length: H }, () => Array(W).fill(' ')); const n = 15, bw = 2, gap = 1, x0 = 5;
+      ['20k', '15k', '10k', ' 5k', '  0'].forEach((l, i) => { const y = Math.round(i * (H - 2) / 4); for (let k = 0; k < 3; k++) g[y][k] = l[k]; });
+      const grow = Math.min(1, (t % 9) / 4);
+      for (let b = 0; b < n; b++) { const base = Math.pow((b + 1) / n, 1.8), tot = Math.max(1, Math.round(base * (H - 2) * grow));
+        const p1 = Math.round(tot * .55), p2 = Math.round(tot * .3);
+        for (let h = 0; h < tot; h++) { const y = H - 2 - h; const c = h < p1 ? '#' : h < p1 + p2 ? '+' : ':';
+          for (let w = 0; w < bw; w++) { const x = x0 + b * (bw + gap) + w; if (x < W && y >= 0) g[y][x] = c; } } }
+      for (let x = 4; x < W; x++) g[H - 1][x] = '-';
+      return g.map(r => r.join('')).join('\n'); },
+    dona(t, W, H) {
+      const out = Array(W * H).fill(' '), z = Array(W * H).fill(0);
+      const A = t * .9, B = t * .45, cA = Math.cos(A), sA = Math.sin(A), cB = Math.cos(B), sB = Math.sin(B);
+      const cx = W * .64, sc = Math.min(W * .3, H * .78);
+      for (let j = 0; j < 6.283; j += .06) { const ct = Math.cos(j), st = Math.sin(j);
+        for (let i = 0; i < 6.283; i += .018) { const sp = Math.sin(i), cp = Math.cos(i), h = ct + 2;
+          const D = 1 / (sp * h * sA + st * cA + 5), tt = sp * h * cA - st * sA;
+          const x = Math.round(cx + sc * D * (cp * h * cB - tt * sB) * 1.9), y = Math.round(H / 2 + sc * D * (cp * h * sB + tt * cB) * .95);
+          const N = (st * sA - sp * ct * cA) * cB - sp * ct * sA - st * cA - cp * ct * sB;
+          const o = x + W * y; if (y >= 0 && y < H && x >= 0 && x < W && D > z[o]) { z[o] = D; out[o] = C(Math.max(0, N) / 1.42 * .92 + .08); } } }
+      let s = ''; for (let y = 0; y < H; y++) s += out.slice(y * W, y * W + W).join('') + '\n'; return s; },
+    olas(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const h = Math.sin(x * .25 + t * 2.1) * 2 + Math.sin(x * .11 - t * 1.4) * 2 + H * .55; const d = y - (H - h);
+      s += d < 0 ? ' ' : C(Math.max(.1, 1 - d / 7)); } s += '\n'; } return s; },
+    esfera(t, W, H) { let s = ''; const R = Math.min(W / 2.2, H) * .46;
+      for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) { const nx = (x - W / 2) / 2.1 / R, ny = (y - H / 2) / R, q = nx * nx + ny * ny;
+        if (q > 1) { s += ' '; continue; } const nz = Math.sqrt(1 - q), lx = Math.cos(t), lz = Math.sin(t);
+        const lon = Math.atan2(nx, nz) + t * .8, grid = (Math.abs(Math.sin(lon * 4)) < .12 || Math.abs(Math.sin(ny * 6)) < .1) ? .25 : 0;
+        s += C(Math.max(.06, nx * lx * .7 + nz * (lz * .5 + .5) * .6 - ny * .2) * .85 + grid); } s += '\n'; } return s; },
+    lluvia(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const sp = 3 + (x * 7919 % 11), head = (t * sp + x * 13.7) % (H + 10), d = head - y;
+      s += d >= 0 && d < 6 ? (d < 1 ? '@' : '01#+:.'[Math.floor(d)] ) : ' '; } s += '\n'; } return s; },
+    cubo(t, W, H) { const g = Array.from({ length: H }, () => Array(W).fill(' '));
+      const P = [-1, 1].flatMap(a => [-1, 1].flatMap(b => [-1, 1].map(c => [a, b, c])));
+      const E = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+      const ay = t * .8, ax = t * .5, sc = Math.min(W / 2.2, H) * .32;
+      const pr = ([x, y, z]) => { let X = x * Math.cos(ay) + z * Math.sin(ay), Z = -x * Math.sin(ay) + z * Math.cos(ay);
+        let Y = y * Math.cos(ax) - Z * Math.sin(ax); Z = y * Math.sin(ax) + Z * Math.cos(ax); const k = 3 / (Z + 4);
+        return [W / 2 + X * k * sc * 2.1, H / 2 + Y * k * sc, Z]; };
+      const Q = P.map(pr);
+      E.forEach(([a, b]) => { const [x1, y1, z1] = Q[a], [x2, y2, z2] = Q[b], n = 60;
+        for (let i = 0; i <= n; i++) { const x = Math.round(x1 + (x2 - x1) * i / n), y = Math.round(y1 + (y2 - y1) * i / n), z = z1 + (z2 - z1) * i / n;
+          if (y >= 0 && y < H && x >= 0 && x < W) g[y][x] = z < -.3 ? '#' : z < .4 ? '+' : ':'; } });
+      Q.forEach(([x, y]) => { x = Math.round(x); y = Math.round(y); if (y >= 0 && y < H && x >= 0 && x < W) g[y][x] = '@'; });
+      return g.map(r => r.join('')).join('\n'); },
+    ondas(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const dx = x / W - .5, dy = (y / H - .5) * .5, r = Math.hypot(dx, dy);
+      const v = Math.sin(r * 42 - t * 2.6) * .55 + Math.sin(x * .07 + y * .19 + t) * .45;
+      s += C((v * .5 + .5) * Math.min(1, r * 3)); } s += '\n'; } return s; },
+    carga(t, W, H) { let s = ''; for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) {
+      const a = Math.atan2(y - H / 2, (x - W / 2) / 2), r = Math.hypot((x - W / 2) / 2, y - H / 2);
+      s += r > 3 && r < 4.6 ? C(((a + Math.PI - t * 4) % 6.283 + 6.283) % 6.283 / 6.283) : ' '; } s += '\n'; } return s; }
+  };
+  const init = () => {
+    const items = [...document.querySelectorAll('pre[data-ascii]')].map(pre => ({ pre, fn: S[pre.dataset.ascii] || S.olas,
+      W: +pre.dataset.cols || 60, H: +pre.dataset.rows || 20, seen: true }));
+    const fit = () => items.forEach(it => { const w = it.pre.parentElement.clientWidth; if (w) it.pre.style.fontSize = (w / (it.W * .6)) + 'px'; });
+    fit(); addEventListener('resize', fit);
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver(es => es.forEach(e => { const it = items.find(i => i.pre === e.target); if (it) it.seen = e.isIntersecting; }));
+      items.forEach(it => io.observe(it.pre)); }
+    let last = 0; const loop = now => { if (now - last > 60) { last = now; const t = now / 1000;
+      items.forEach(it => { if (it.seen) it.pre.textContent = it.fn(t, it.W, it.H); }); } requestAnimationFrame(loop); };
+    items.forEach(it => { it.pre.textContent = it.fn(0, it.W, it.H); }); requestAnimationFrame(loop);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
+})();
+</script>
+</body>
+</html>
